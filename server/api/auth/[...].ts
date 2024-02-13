@@ -52,10 +52,11 @@ export const authOptions: AuthConfig = {
   },
   providers: [
     AdvantageProvider({
+      id: 'advantage-custom',
       clientId: runtimeConfig.advantage.clientId,
     }),
     AzureADB2CProvider({
-      id: 'azure-ad',
+      id: 'advantage',
       clientId: runtimeConfig.advantage.clientId,
       clientSecret: runtimeConfig.advantage.clientSecret,
       tenantId: runtimeConfig.advantage.tenantId,
@@ -112,12 +113,8 @@ const handler = NuxtAuthHandler(authOptions, runtimeConfig)
 
 export default defineEventHandler((event) => {
   const ORIGIN = getRequestHeader(event, 'Origin')
-  const baseUrl = runtimeConfig.public?.authJs?.baseUrl
-  console.log('credentials.authorize', { ORIGIN, baseUrl })
-
   if (!ORIGIN) {
-    console.warn('[auth] ORIGIN not set. Auth disabled.')
-    // return false
+    console.warn('[auth] ORIGIN not set.')
   }
 
   return handler(event)

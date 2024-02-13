@@ -84,6 +84,6 @@ const greeting = ref('')
 const randomize = () => {
   greeting.value = greetings[Math.floor(Math.random() * greetings.length)]
 }
-const { pause, resume, isActive } = useIntervalFn(randomize, 5000)
+const { pause, resume, isActive } = useIntervalFn(randomize, 1000 * 30)
 randomize()
 </script>
