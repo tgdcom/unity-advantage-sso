@@ -80,10 +80,14 @@ const greetings = [
   'Szia',
 ]
 
-const greeting = ref('')
-const randomize = () => {
-  greeting.value = greetings[Math.floor(Math.random() * greetings.length)]
-}
-const { pause, resume, isActive } = useIntervalFn(randomize, 1000 * 30)
-randomize()
+const random = () => greetings[Math.floor(Math.random() * greetings.length)]
+const greeting = useState('greeting', random)
+
+const { pause, resume, isActive } = useIntervalFn(
+  () => {
+    greeting.value = random()
+  },
+  1000 * 30,
+  { immediateCallback: false },
+)
 </script>
