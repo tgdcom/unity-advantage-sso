@@ -85,7 +85,7 @@ export const authOptions: AuthConfig = {
           placeholder: '(hint: anything but "password")',
         },
       },
-      authorize(credentials) {
+      authorize(credentials, request) {
         if (credentials?.password === 'password') {
           // eslint-disable-next-line no-console
           console.error(
@@ -93,6 +93,10 @@ export const authOptions: AuthConfig = {
           )
           return null
         }
+
+        const requestOrigin = request.headers.get('Origin')
+        const serverOrigin = runtimeConfig.public?.authJs?.baseUrl
+        console.log('credentials.authorize', { requestOrigin, serverOrigin })
 
         const id = uuid()
         const name = (credentials?.username as string) || 'Jimmy Neutron'
