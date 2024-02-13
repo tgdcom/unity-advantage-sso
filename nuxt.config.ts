@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     verifyClientOnEveryRequest: false,
     guestRedirectTo: '/', // where to redirect if the user is not authenticated
     authenticatedRedirectTo: '/', // where to redirect if the user is authenticated
-    baseUrl: process.env.NUXT_NEXTAUTH_URL || 'http://localhost:3001/', // should be something like https://www.my-app.com
+    // baseUrl: process.env.NUXT_NEXTAUTH_URL || 'http://localhost:3001/', // should be something like https://www.my-app.com
   },
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
@@ -38,13 +38,9 @@ export default defineNuxtConfig({
       tenantId: process.env.NUXT_ADVANTAGE_TENANT_ID,
       primaryUserFlow: process.env.NUXT_ADVANTAGE_PRIMARY_USER_FLOW,
     },
-    github: {
-      clientId: process.env.NUXT_GITHUB_CLIENT_ID,
-      clientSecret: process.env.NUXT_GITHUB_CLIENT_SECRET,
-    },
     public: {
       authJs: {
-        baseUrl: process.env.NUXT_NEXTAUTH_URL || 'http://localhost:3001/', // The URL of your deployed app (used for origin Check in production)
+        // baseUrl: process.env.NUXT_NEXTAUTH_URL || 'http://localhost:3001/', // The URL of your deployed app (used for origin Check in production)
         verifyClientOnEveryRequest: process.env.NODE_ENV === 'production', // whether to hit the /auth/session endpoint on every client request
       },
     },
