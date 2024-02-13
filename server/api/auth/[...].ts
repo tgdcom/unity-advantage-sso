@@ -12,11 +12,6 @@ import { NuxtAuthHandler } from '#auth'
 
 const runtimeConfig = useRuntimeConfig()
 
-type CredentialsUser = User & {
-  username: string
-  password: string
-}
-
 type AuthConfig = Parameters<typeof NuxtAuthHandler>[0]
 
 // Refer to Auth.js docs for more details
@@ -85,7 +80,7 @@ export const authOptions: AuthConfig = {
           placeholder: '(hint: anything but "password")',
         },
       },
-      authorize(credentials, request) {
+      authorize(credentials) {
         if (credentials?.password === 'password') {
           // eslint-disable-next-line no-console
           console.error(
@@ -93,10 +88,6 @@ export const authOptions: AuthConfig = {
           )
           return null
         }
-
-        const requestOrigin = request.headers.get('Origin')
-        const serverOrigin = runtimeConfig.public?.authJs?.baseUrl
-        console.log('credentials.authorize', { requestOrigin, serverOrigin })
 
         const id = uuid()
         const name = (credentials?.username as string) || 'Jimmy Neutron'
@@ -115,6 +106,19 @@ export const authOptions: AuthConfig = {
   ],
 }
 
-export default NuxtAuthHandler(authOptions, runtimeConfig)
+const handler = NuxtAuthHandler(authOptions, runtimeConfig)
 // If you don't want to pass the full runtime config,
 //  you can pass something like this: { public: { authJs: { baseUrl: "" } } }
+
+export default defineEventHandler((event) => {
+  const ORIGIN = getRequestHeader(event, 'Origin')
+  const baseUrl = runtimeConfig.public?.authJs?.baseUrl
+  console.log('credentials.authorize', { ORIGIN, baseUrl })
+
+  if (!ORIGIN) {
+    console.warn('[auth] ORIGIN not set. Auth disabled.')
+    // return false
+  }
+
+  return handler(event)
+})
