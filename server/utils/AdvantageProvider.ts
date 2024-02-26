@@ -6,7 +6,7 @@ export const AdvantageProviderConfig = {
   id: 'advantage',
   name: 'Advantage SSO',
   type: 'oauth',
-  checks: ['pkce', 'state'],
+  checks: ['pkce'],
   profile: (token: Profile): User => ({
     id: token.oid,
     name: `${token.given_name} ${token.family_name}`,
