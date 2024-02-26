@@ -28,14 +28,10 @@ export function AdvantageProvider(
 
   return {
     ...AdvantageProviderConfig,
-    authorization: {
-      url: absoluteUrl('/authorize'),
-      params: {
-        scope: 'openid',
-        response_type: 'code',
-        redirect_uri: withBase('/api/auth/callback/advantage', ORIGIN),
-      },
+    client: {
+      token_endpoint_auth_method: 'none',
     },
+    authorization: absoluteUrl('/authorize'),
     token: absoluteUrl('/token'),
     issuer: absoluteUrl('/'),
     options,
