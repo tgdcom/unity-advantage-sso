@@ -52,11 +52,11 @@ export const authOptions: AuthConfig = {
   },
   providers: [
     AdvantageProvider({
-      id: 'advantage-custom',
+      id: 'advantage',
       clientId: runtimeConfig.advantage.clientId,
     }),
     AzureADB2CProvider({
-      id: 'advantage',
+      // id: 'advantage',
       clientId: runtimeConfig.advantage.clientId,
       clientSecret: runtimeConfig.advantage.clientSecret,
       tenantId: runtimeConfig.advantage.tenantId,
