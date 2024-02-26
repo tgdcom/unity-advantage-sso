@@ -26,6 +26,9 @@ dependencies:
   pathe:
     specifier: ^1.1.2
     version: 1.1.2
+  ufo:
+    specifier: ^1.4.0
+    version: 1.4.0
   vue:
     specifier: ^3.4.15
     version: 3.4.18

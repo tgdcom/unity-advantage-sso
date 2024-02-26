@@ -1,4 +1,4 @@
-import { join } from 'pathe'
+import { joinURL, withBase } from 'ufo'
 import type { Profile, User } from '@auth/core/types'
 import type { OAuth2Config, OAuthUserConfig } from '@auth/core/providers/oauth'
 
@@ -24,7 +24,7 @@ export function AdvantageProvider(
   const { ADVANTAGE_SSO_BASE_URL, ORIGIN } = useRuntimeConfig()
 
   const absoluteUrl = (...path: string[]): string =>
-    join(ADVANTAGE_SSO_BASE_URL, ...path)
+    joinURL(ADVANTAGE_SSO_BASE_URL, ...path)
 
   return {
     ...AdvantageProviderConfig,
@@ -33,7 +33,7 @@ export function AdvantageProvider(
       params: {
         scope: 'openid',
         response_type: 'code',
-        redirect_uri: join(ORIGIN, '/api/auth/callback/advantage'),
+        redirect_uri: withBase('/api/auth/callback/advantage', ORIGIN),
       },
     },
     token: absoluteUrl('/token'),
