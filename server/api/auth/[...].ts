@@ -107,15 +107,6 @@ export const authOptions: AuthConfig = {
   ],
 }
 
-const handler = NuxtAuthHandler(authOptions, runtimeConfig)
 // If you don't want to pass the full runtime config,
 //  you can pass something like this: { public: { authJs: { baseUrl: "" } } }
-
-export default defineEventHandler((event) => {
-  const ORIGIN = getRequestHeader(event, 'Origin')
-  if (!ORIGIN) {
-    console.warn('[auth] ORIGIN not set.')
-  }
-
-  return handler(event)
-})
+export default defineEventHandler(NuxtAuthHandler(authOptions, runtimeConfig))
