@@ -1,4 +1,4 @@
-import { joinURL, withBase } from 'ufo'
+import { joinURL } from 'ufo'
 import type { Profile, User } from '@auth/core/types'
 import type { OAuth2Config, OAuthUserConfig } from '@auth/core/providers/oauth'
 
@@ -6,7 +6,7 @@ export const AdvantageProviderConfig = {
   id: 'advantage',
   name: 'Advantage SSO',
   type: 'oauth',
-  checks: ['pkce'],
+  checks: ['pkce', 'state'],
   profile: (token: Profile): User => ({
     id: token.oid,
     name: `${token.given_name} ${token.family_name}`,
@@ -30,6 +30,17 @@ export function AdvantageProvider(
     ...AdvantageProviderConfig,
     client: {
       token_endpoint_auth_method: 'none',
+    },
+    cookies: {
+      state: {
+        name: '__Secure-authjs.state', // __Secure-authjs.state
+        options: {
+          httpOnly: true,
+          sameSite: 'none',
+          path: '/',
+          secure: process.env.NODE_ENV === 'production',
+        },
+      },
     },
     authorization: absoluteUrl('/authorize'),
     token: absoluteUrl('/token'),
