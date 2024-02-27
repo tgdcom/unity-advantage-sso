@@ -1,0 +1,37 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt --bun build",
+    "dev": "nuxt --bun dev",
+    "generate": "nuxt --bun generate",
+    "preview": "nuxt --bun preview",
+    "postinstall": "nuxt --bun prepare",
+    "lint": "eslint --max-warnings 0 .",
+    "typecheck": "nuxt --bun typecheck",
+    "start": "NODE_ENV=production bun .output/server/index.mjs"
+  },
+  "devDependencies": {
+    "@bg-dev/nuxt-naiveui": "^1.8.1",
+    "@nuxtjs/eslint-config-typescript": "^12.0.0",
+    "@nuxtjs/tailwindcss": "^6.10.4",
+    "@sidebase/nuxt-auth": "^0.6.4",
+    "@types/node": "^18.11.18",
+    "@types/uuid": "^9.0.8",
+    "eslint": "^8.33.0",
+    "nuxt": "^3.10.3",
+    "radash": "^12.0.0",
+    "typescript": "^4.9.5",
+    "uuid": "^9.0.1",
+    "vue-tsc": "^1.0.24"
+  },
+  "peerDependencies": {
+    "next-auth": "4.21.1"
+  },
+  "dependencies": {
+    "superjson": "^2.2.1",
+    "zod": "^3.22.4",
+    "trpc-nuxt": "^0.10.15",
+    "@trpc/client": "^10.45.0",
+    "@trpc/server": "^10.45.0"
+  }
+}
