@@ -1,4 +1,5 @@
-const ORIGIN = process.env.ORIGIN || 'http://localhost:3001/'
+import { joinURL } from 'ufo'
+const ORIGIN = process.env.AUTH_ORIGIN || process.env.ORIGIN || 'http://localhost:3001/'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -7,6 +8,12 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@bg-dev/nuxt-naiveui'
   ],
+  auth: {
+    baseUrl: joinURL(ORIGIN, '/api/auth'),
+    provider: {
+      name: 'advantage'
+    }
+  },
   build: {
     transpile: [
       'trpc-nuxt'

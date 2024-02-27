@@ -45,13 +45,13 @@ export default NuxtAuthHandler({
   },
   providers: [
     AdvantageProvider({
-      // id: 'advantage',
-      id: 'advantage-custom',
+      id: 'advantage',
+      // id: 'advantage-custom',
       clientId: process.env.NUXT_ADVANTAGE_CLIENT_ID as string
     }),
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
     AzureADB2CProvider.default({
-      id: 'advantage',
+      // id: 'advantage',
       clientId: process.env.NUXT_ADVANTAGE_CLIENT_ID,
       // clientSecret: runtimeConfig.advantage.clientSecret,
       tenantId: process.env.NUXT_ADVANTAGE_TENANT_ID,
@@ -94,7 +94,6 @@ export default NuxtAuthHandler({
           name,
           hasActiveEdwSubscription: true,
           hasActiveUmgSubscription: true
-          // subscriptions: 'can access EDW',
         }
 
         return user
