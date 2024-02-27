@@ -52,15 +52,16 @@ export const authOptions: AuthConfig = {
   },
   providers: [
     AdvantageProvider({
-      id: 'advantage',
+      // id: 'advantage',
       clientId: runtimeConfig.advantage.clientId,
     }),
     AzureADB2CProvider({
-      // id: 'advantage',
+      id: 'advantage',
       clientId: runtimeConfig.advantage.clientId,
-      clientSecret: runtimeConfig.advantage.clientSecret,
+      // clientSecret: runtimeConfig.advantage.clientSecret,
       tenantId: runtimeConfig.advantage.tenantId,
       primaryUserFlow: runtimeConfig.advantage.primaryUserFlow,
+      checks: ['pkce', 'state'],
     }),
     CredentialsProvider({
       // The name to display on the sign in form (e.g. 'Sign in with...')
