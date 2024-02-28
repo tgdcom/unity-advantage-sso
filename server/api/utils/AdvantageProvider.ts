@@ -1,5 +1,5 @@
 import { joinURL } from 'ufo'
-import type { OAuthConfig } from 'next-auth/providers/oauth'
+import type { OAuthConfig, OAuthUserConfig as OAuthUserConfigImp } from 'next-auth/providers/oauth'
 
 export interface Profile {
   oid: string
@@ -16,11 +16,10 @@ export interface User {
   hasActiveUmgSubscription: boolean
 }
 
-type OAuthUserConfig<P> = Omit<
-  Partial<OAuthConfig<P>>,
-  'options' | 'type'
-> &
-  Required<Pick<OAuthConfig<P>, 'clientId'>>
+type OAuthUserConfig<P> =
+  Partial<OAuthUserConfigImp<P>> &
+  Required<Pick<OAuthUserConfigImp<P>, 'clientId'>> &
+  { baseURL: string }
 
 export const AdvantageProviderConfig = {
   id: 'advantage',
@@ -38,37 +37,22 @@ export const AdvantageProviderConfig = {
 } satisfies OAuthConfig<Profile>
 
 export function AdvantageProvider (
-  options: OAuthUserConfig<Profile>
+  { baseURL, ...options }: OAuthUserConfig<Profile>
 ): OAuthConfig<Profile> {
-  // https://unityssotest.b2clogin.com/unityssotest.onmicrosoft.com/B2C_1_SignUp_SignIn_Web_Dev_English/oauth2/v2.0/
-  const { ADVANTAGE_SSO_BASE_URL } = useRuntimeConfig()
-
+  // const baseURL = https://unityssotest.b2clogin.com/unityssotest.onmicrosoft.com/B2C_1_SignUp_SignIn_Web_Dev_English/oauth2/v2.0/
   const absoluteUrl = (...path: string[]): string =>
-    joinURL(ADVANTAGE_SSO_BASE_URL, ...path)
+    joinURL(baseURL, ...path)
 
   return {
     ...AdvantageProviderConfig,
-    id_token: true,
+    idToken: true,
     client: {
       token_endpoint_auth_method: 'none'
-    },
-    cookies: {
-      state: {
-        name: '__Secure-authjs.state', // __Secure-authjs.state
-        options: {
-          httpOnly: true,
-          sameSite: 'none',
-          path: '/',
-          secure: process.env.NODE_ENV === 'production'
-        }
-      }
     },
     authorization: absoluteUrl('/authorize'),
     token: absoluteUrl('/token'),
     issuer: absoluteUrl('/'),
-    options
-  } as OAuthConfig<Profile> & {
-    options?: OAuthUserConfig<Profile>
+    options: options as OAuthUserConfigImp<Profile>
   }
 }
 
