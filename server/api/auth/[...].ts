@@ -48,7 +48,7 @@ export default NuxtAuthHandler({
       id: 'advantage',
       // id: 'advantage-custom',
       clientId: process.env.NUXT_ADVANTAGE_CLIENT_ID as string,
-      baseURL: process.env.ADVANTAGE_SSO_BASE_URL as string
+      discoveryURL: process.env.ADVANTAGE_SSO_DISCOVERY_URL as string
     }),
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
     AzureADB2CProvider.default({

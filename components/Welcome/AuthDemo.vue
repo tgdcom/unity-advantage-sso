@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 const { status, data, signIn, signOut } = useAuth()
 </script>
+
 <template>
   <div class="layout">
     <div class="group">
