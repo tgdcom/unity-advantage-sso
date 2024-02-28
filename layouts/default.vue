@@ -1,11 +1,11 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper text-base">
     <div class="margins" style="padding-top: 3rem; ">
       <div class="content">
         <h1 class="heading">
           <NuxtLink to="/">
-            This
-          </NuxtLink> is a test environment for <span class="gradient__text">nuxt/vue stuff</span>!
+            This is a test environment for <span class="gradient__text">nuxt/vue stuff</span>!
+          </NuxtLink>
         </h1>
         <p class="description">
           Read documentation <a class="hover-underline-animation" href="https://nuxt.com" target="_blank">here</a>.

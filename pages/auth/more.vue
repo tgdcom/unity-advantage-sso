@@ -8,7 +8,7 @@
         Not logged in.
       </span>
 
-      <WelcomeButtonLink v-if="status === 'authenticated'" @click="signOut">
+      <WelcomeButtonLink v-if="status === 'authenticated'" class="text-xs" @click="signOut">
         Sign out
       </WelcomeButtonLink>
     </h1>
