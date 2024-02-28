@@ -27,7 +27,7 @@ const { status, data, signIn, signOut } = useAuth()
         <WelcomeButtonLink href="https://sidebase.io/nuxt-auth/getting-started" target="_blank">
           Documentation
         </WelcomeButtonLink>
-        <WelcomeButtonLink v-if="status !== 'authenticated'" @click="signIn">
+        <WelcomeButtonLink v-if="status !== 'authenticated'" @click="() => signIn('advantage')">
           Sign in
         </WelcomeButtonLink>
         <WelcomeButtonLink v-else @click="signOut">
