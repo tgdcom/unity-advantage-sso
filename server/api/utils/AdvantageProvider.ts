@@ -45,13 +45,14 @@ export function AdvantageProvider (
 
   return {
     ...AdvantageProviderConfig,
-    idToken: true,
     client: {
       token_endpoint_auth_method: 'none'
     },
     authorization: absoluteUrl('/authorize'),
     token: absoluteUrl('/token'),
-    issuer: absoluteUrl('/'),
+    idToken: true,
+    // issuer: absoluteUrl('/'),
+    // issuer: 'https://unityssotest.b2clogin.com/971bf98d-8a85-4eef-a141-ba3049bd47b3/v2.0/',
     options: options as OAuthUserConfigImp<Profile>
   }
 }
