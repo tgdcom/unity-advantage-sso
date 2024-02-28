@@ -48,6 +48,7 @@ export function AdvantageProvider (
 
   return {
     ...AdvantageProviderConfig,
+    id_token: true,
     client: {
       token_endpoint_auth_method: 'none'
     },
