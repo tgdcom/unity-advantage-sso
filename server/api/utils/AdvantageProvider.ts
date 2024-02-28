@@ -39,12 +39,13 @@ export const AdvantageProviderConfig = {
 export function AdvantageProvider (
   { baseURL, ...options }: OAuthUserConfig<Profile>
 ): OAuthConfig<Profile> {
-  // const baseURL = https://unityssotest.b2clogin.com/unityssotest.onmicrosoft.com/B2C_1_SignUp_SignIn_Web_Dev_English/oauth2/v2.0/
+  // const baseURL = https://unityssotest.b2clogin.com/unityssotest.onmicrosoft.com/B2C_1_SignUp_SignIn_Web_Dev_English/oauth2/v2.0/.well-known/openid-configuration
   const absoluteUrl = (...path: string[]): string =>
     joinURL(baseURL, ...path)
 
   return {
     ...AdvantageProviderConfig,
+    wellKnown: 'https://unityssotest.b2clogin.com/unityssotest.onmicrosoft.com/B2C_1_SignUp_SignIn_Web_Dev_English/v2.0/.well-known/openid-configuration',
     client: {
       token_endpoint_auth_method: 'none'
     },
