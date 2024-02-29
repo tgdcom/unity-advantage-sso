@@ -1,13 +1,15 @@
 import CredentialsProvider from 'next-auth/providers/credentials'
-import AzureADB2CProvider from 'next-auth/providers/azure-ad-b2c'
 import { pick } from 'radash'
 import { v4 as uuid } from 'uuid'
 
 import { AdvantageProvider, type User } from '../utils/AdvantageProvider'
 import { NuxtAuthHandler } from '#auth'
 
+type AuthOptions = Exclude<Parameters<typeof NuxtAuthHandler>[0], undefined>
+type Callbacks = Exclude<AuthOptions['callbacks'], undefined>
+type SessionParams = Parameters<Exclude<Callbacks['session'], undefined>>[0]
+
 export default NuxtAuthHandler({
-  // TODO: SET A STRONG SECRET, SEE https://sidebase.io/nuxt-auth/configuration/nuxt-auth-handler#secret
   secret: process.env.AUTH_SECRET,
   callbacks: {
     jwt ({ token, user }) {
@@ -23,7 +25,7 @@ export default NuxtAuthHandler({
 
       return token
     },
-    session ({ session, token, user }: { session: any; token: any; user: any }) {
+    session ({ session, token, user }: SessionParams) {
       // eslint-disable-next-line no-console
       console.log('session callback', { session, token, user })
 
@@ -37,7 +39,7 @@ export default NuxtAuthHandler({
       session.user = {
         ...session.user,
         ...pick(token, wanted),
-        ...pick(user, wanted)
+        ...pick(user as any, wanted)
       }
 
       return session
@@ -48,16 +50,7 @@ export default NuxtAuthHandler({
       id: 'advantage',
       // id: 'advantage-custom',
       clientId: process.env.NUXT_ADVANTAGE_CLIENT_ID as string,
-      discoveryURL: process.env.ADVANTAGE_SSO_DISCOVERY_URL as string
-    }),
-    // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
-    AzureADB2CProvider.default({
-      // id: 'advantage',
-      clientId: process.env.NUXT_ADVANTAGE_CLIENT_ID,
-      // clientSecret: runtimeConfig.advantage.clientSecret,
-      tenantId: process.env.NUXT_ADVANTAGE_TENANT_ID,
-      primaryUserFlow: process.env.NUXT_ADVANTAGE_PRIMARY_USER_FLOW,
-      checks: ['pkce', 'state']
+      issuer: process.env.ADVANTAGE_SSO_ISSUER as string
     }),
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
     CredentialsProvider.default({
