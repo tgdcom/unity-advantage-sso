@@ -1,24 +1,11 @@
 import { joinURL } from 'ufo'
 import type { OAuthConfig, OAuthUserConfig as OAuthUserConfigImp } from 'next-auth/providers/oauth'
+// @note: auto-imports
+// import type { Profile, User } from './auth-type'
 
 type OAuthUserConfig<P> =
   Partial<OAuthUserConfigImp<P>> &
   Required<Pick<OAuthUserConfigImp<P>, 'clientId' | 'issuer'>>
-
-export interface Profile {
-  oid: string
-  given_name: string
-  family_name: string
-  extension_hasActiveEdwSubscription?: boolean
-  extension_hasActiveUmgSubscription?: boolean
-}
-
-export interface User {
-  id: string
-  name: string
-  hasActiveEdwSubscription: boolean
-  hasActiveUmgSubscription: boolean
-}
 
 export function AdvantageProvider (
   { issuer, ...options }: OAuthUserConfig<Profile>
@@ -46,5 +33,3 @@ export function AdvantageProvider (
     options: options as OAuthUserConfigImp<Profile>
   }
 }
-
-export default AdvantageProvider

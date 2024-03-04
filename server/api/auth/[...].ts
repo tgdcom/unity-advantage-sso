@@ -2,7 +2,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import { pick } from 'radash'
 import { v4 as uuid } from 'uuid'
 
-import { AdvantageProvider, type User } from '../utils/AdvantageProvider'
+// import { AdvantageProvider, type User } from '#imports'
 import { NuxtAuthHandler } from '#auth'
 
 type AuthOptions = Exclude<Parameters<typeof NuxtAuthHandler>[0], undefined>
