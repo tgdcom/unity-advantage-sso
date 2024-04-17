@@ -104,16 +104,17 @@ export default defineEventHandler((event) => {
 
   const { error, error_description: errorDescription } = query
 
-  if (error !== 'access_denied') {
-    return handler(event)
-  }
+  if (error === 'access_denied') {
+    // eslint-disable-next-line no-console
+    console.log('auth.query', { path, error, errorDescription })
 
-  // eslint-disable-next-line no-console
-  console.log('auth.query', { path, error, errorDescription })
-
-  if ((errorDescription as string)?.startsWith(ADVANTAGED_ERROR_USER_CANCLED)) {
-    console.warn('User cancelled login process:', errorDescription)
-    return navigateTo('/')
+    if ((errorDescription as string)?.startsWith(ADVANTAGED_ERROR_USER_CANCLED)) {
+      console.warn('User cancelled login process:', errorDescription)
+      throw createError({
+        statusCode: 403,
+        statusMessage: 'User cancelled login process'
+      })
+    }
   }
 
   return handler(event)
