@@ -11,6 +11,9 @@ type SessionParams = Parameters<Exclude<Callbacks['session'], undefined>>[0]
 
 export default NuxtAuthHandler({
   secret: process.env.AUTH_SECRET,
+  pages: {
+    error: '/auth/error'
+  },
   callbacks: {
     jwt ({ token, user }) {
       if (!user) { return token }

@@ -1,7 +1,3 @@
-<script lang="ts" setup>
-const { status, data, signIn, signOut } = useAuth()
-</script>
-
 <template>
   <div class="layout">
     <div class="group">
@@ -37,3 +33,8 @@ const { status, data, signIn, signOut } = useAuth()
     </div>
   </div>
 </template>
+
+<script lang="ts" setup>
+const { status, data, signIn, signOut } = useAuth()
+
+</script>
