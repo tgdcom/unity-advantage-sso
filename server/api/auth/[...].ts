@@ -9,6 +9,8 @@ type AuthOptions = Exclude<Parameters<typeof NuxtAuthHandler>[0], undefined>
 type Callbacks = Exclude<AuthOptions['callbacks'], undefined>
 type SessionParams = Parameters<Exclude<Callbacks['session'], undefined>>[0]
 
+const ADVANTAGED_ERROR_USER_CANCLED = 'AADB2C90091' as const
+
 const handler = NuxtAuthHandler({
   secret: process.env.AUTH_SECRET,
   callbacks: {
@@ -99,7 +101,20 @@ const handler = NuxtAuthHandler({
 export default defineEventHandler((event) => {
   const query = getQuery(event)
   const path = event.path
+
+  const { error, error_description: errorDescription } = query
+
+  if (error !== 'access_denied') {
+    return handler(event)
+  }
+
   // eslint-disable-next-line no-console
-  console.log('auth.query', { path, query })
+  console.log('auth.query', { path, error, errorDescription })
+
+  if ((errorDescription as string)?.startsWith(ADVANTAGED_ERROR_USER_CANCLED)) {
+    console.warn('User cancelled login process:', errorDescription)
+    return navigateTo('/')
+  }
+
   return handler(event)
 })
