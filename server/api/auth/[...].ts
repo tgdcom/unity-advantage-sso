@@ -9,11 +9,8 @@ type AuthOptions = Exclude<Parameters<typeof NuxtAuthHandler>[0], undefined>
 type Callbacks = Exclude<AuthOptions['callbacks'], undefined>
 type SessionParams = Parameters<Exclude<Callbacks['session'], undefined>>[0]
 
-export default NuxtAuthHandler({
+const handler = NuxtAuthHandler({
   secret: process.env.AUTH_SECRET,
-  pages: {
-    error: '/auth/error'
-  },
   callbacks: {
     jwt ({ token, user }) {
       if (!user) { return token }
@@ -97,4 +94,12 @@ export default NuxtAuthHandler({
       }
     })
   ]
+})
+
+export default defineEventHandler((event) => {
+  const query = getQuery(event)
+  const path = event.path
+  // eslint-disable-next-line no-console
+  console.log('auth.query', { path, query })
+  return handler(event)
 })
